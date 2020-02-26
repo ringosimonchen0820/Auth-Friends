@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
+import Friends from './components/Friends'
+import addFriend from './components/addFriend'
+const Div = styled.div`
+display:flex;
+justify-content:space-around;
+`;
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  <Router>
+    <div className='App'>
+      <Div>
+      <Link to='/login'>Login</Link>
+      <Link to='/protected'>Friends List</Link>
+      <Link to='/addFriend'>Add a Friend</Link>
+      </Div>
+      <Switch>
+        <PrivateRoute exact path='/protected' component={Friends}/>
+        <Route path='/login' component={Login}/>
+        <PrivateRoute path='/addFriend' component={addFriend}/>
+{/* <PrivateRoute path="/dashboard" component={Dashboard} /> */}
+        <Route component={Login} />
+      </Switch>
     </div>
+  </Router>
   );
 }
 
